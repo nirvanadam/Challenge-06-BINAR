@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import { getMovieList, searchMovie } from "../api";
 
 function Dashboard() {
-  // const film = [1, 2, 3, 4, 5, 6];
-
   const [popularMovies, setPopularMovies] = useState([]);
 
   // Mendapatkan data ketika website dibuka
@@ -16,14 +14,14 @@ function Dashboard() {
   const PopularMovieList = () => {
     return popularMovies.map((movie, i) => {
       return (
-        <div key={i} className="flex flex-col gap-2 lg:gap-4 w-[22%] h-[500px] font-['montserrat'] text-center text-white group">
+        <div key={i} className="flex flex-col gap-2 lg:gap-4 w-[30%] lg:w-[22%] h-fit font-['montserrat'] text-center text-white group border text-[8px] lg:text-base">
           <img src={`${process.env.REACT_APP_BASEIMGURL}/${movie.poster_path}`} alt="poster" className="group-hover:scale-105 transition-all duration-150" />
           <h1 className="font-semibold tracking-widest uppercase">{movie.title}</h1>
-          <div className="flex justify-center items-center gap-4">
+          <div className="flex flex-col lg:flex-row justify-center items-center gap-2 lg:gap-4">
             <h2 className="tracking-widest">{movie.release_date}</h2>
-            <span>|</span>
-            <div className="flex gap-3 items-center">
-              <img src="icons/star_icon.svg" alt="" width="20px" className="invert" />
+            <span className="hidden lg:block">|</span>
+            <div className="flex gap-1 lg:gap-3 items-center">
+              <img src="icons/star_icon.svg" alt="" className="invert w-3 lg:w-5" />
               <h2 className="text-yellow-300">{movie.vote_average}</h2>
             </div>
           </div>
