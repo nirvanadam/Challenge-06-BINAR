@@ -14,7 +14,7 @@ function Dashboard() {
   const PopularMovieList = () => {
     return popularMovies.map((movie, i) => {
       return (
-        <div key={i} className="flex flex-col gap-2 lg:gap-4 w-[30%] lg:w-[22%] h-fit font-['montserrat'] text-center text-white group border text-[8px] lg:text-base">
+        <div key={i} className="flex flex-col gap-2 lg:gap-4 w-[30%] lg:w-[22%] h-fit font-['montserrat'] text-center text-white group text-[8px] lg:text-base">
           <img src={`${process.env.REACT_APP_BASEIMGURL}/${movie.poster_path}`} alt="poster" className="group-hover:scale-105 transition-all duration-150" />
           <h1 className="font-semibold tracking-widest uppercase">{movie.title}</h1>
           <div className="flex flex-col lg:flex-row justify-center items-center gap-2 lg:gap-4">
