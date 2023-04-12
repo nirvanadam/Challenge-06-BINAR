@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { getMovieList, searchMovie } from "../api";
+import { detailMovie, getMovieList, searchMovie } from "../api";
+import { Link } from "react-router-dom";
 
 function Dashboard() {
   const [popularMovies, setPopularMovies] = useState([]);
@@ -14,17 +15,31 @@ function Dashboard() {
   const PopularMovieList = () => {
     return popularMovies.map((movie, i) => {
       return (
-        <div key={i} className="flex flex-col gap-2 lg:gap-4 w-[30%] lg:w-[22%] h-fit font-['montserrat'] text-center text-white group text-[8px] lg:text-base">
-          <img src={`${process.env.REACT_APP_BASEIMGURL}/${movie.poster_path}`} alt="poster" className="group-hover:scale-105 transition-all duration-150" />
-          <h1 className="font-semibold tracking-widest uppercase">{movie.title}</h1>
+        <div
+          key={i}
+          className="flex flex-col gap-2 lg:gap-4 w-[30%] lg:w-[22%] h-fit font-['montserrat'] text-center text-white group text-[8px] lg:text-base"
+        >
+          <img
+            src={`${process.env.REACT_APP_BASEIMGURL}/${movie.poster_path}`}
+            alt="poster"
+            className="group-hover:scale-105 transition-all duration-150"
+          />
+          <h1 className="font-semibold tracking-widest uppercase">
+            {movie.title}
+          </h1>
           <div className="flex flex-col lg:flex-row justify-center items-center gap-2 lg:gap-4">
             <h2 className="tracking-widest">{movie.release_date}</h2>
             <span className="hidden lg:block">|</span>
             <div className="flex gap-1 lg:gap-3 items-center">
-              <img src="icons/star_icon.svg" alt="" className="invert w-3 lg:w-5" />
+              <img
+                src="icons/star_icon.svg"
+                alt=""
+                className="invert w-3 lg:w-5"
+              />
               <h2 className="text-yellow-300">{movie.vote_average}</h2>
             </div>
           </div>
+          <Link to={`/movie/${movie.id}`}>Detail</Link>
         </div>
       );
     });
@@ -51,21 +66,41 @@ function Dashboard() {
       <div className="flex justify-between lg:gap-9 mx-4 lg:mx-10 my-6 fonts-['montserrat']">
         <img src="icons/binar_icon.png" alt="" width="50px" />
         <div className="hidden lg:flex justify-center items-center gap-16 font-['montserrat'] text-white">
-          <a href="#" className="relative before:content-[''] before:absolute before:bg-white before:w-0 before:h-[1px] before:transition-all before:bottom-0 before:left-0 before:duration-200 hover:before:w-full">
+          <a
+            href="#"
+            className="relative before:content-[''] before:absolute before:bg-white before:w-0 before:h-[1px] before:transition-all before:bottom-0 before:left-0 before:duration-200 hover:before:w-full"
+          >
             HOME
           </a>
-          <a href="#" className="relative before:content-[''] before:absolute before:bg-white before:w-0 before:h-[1px] before:transition-all before:bottom-0 before:left-0 before:duration-200 hover:before:w-full">
+          <a
+            href="#"
+            className="relative before:content-[''] before:absolute before:bg-white before:w-0 before:h-[1px] before:transition-all before:bottom-0 before:left-0 before:duration-200 hover:before:w-full"
+          >
             MOVIES
           </a>
-          <a href="#" className="relative before:content-[''] before:absolute before:bg-white before:w-0 before:h-[1px] before:transition-all before:bottom-0 before:left-0 before:duration-200 hover:before:w-full">
+          <a
+            href="#"
+            className="relative before:content-[''] before:absolute before:bg-white before:w-0 before:h-[1px] before:transition-all before:bottom-0 before:left-0 before:duration-200 hover:before:w-full"
+          >
             TV SHOWS
           </a>
-          <a href="#" className="relative before:content-[''] before:absolute before:bg-white before:w-0 before:h-[1px] before:transition-all before:bottom-0 before:left-0 before:duration-200 hover:before:w-full">
+          <a
+            href="#"
+            className="relative before:content-[''] before:absolute before:bg-white before:w-0 before:h-[1px] before:transition-all before:bottom-0 before:left-0 before:duration-200 hover:before:w-full"
+          >
             CONTACT
           </a>
         </div>
-        <form action="" className="flex lg:w-[380px] rounded-full border-2 border-slate-600 px-1">
-          <img src="icons/search_icon.svg" alt="" width="35px" className="invert px-1" />
+        <form
+          action=""
+          className="flex lg:w-[380px] rounded-full border-2 border-slate-600 px-1"
+        >
+          <img
+            src="icons/search_icon.svg"
+            alt=""
+            width="35px"
+            className="invert px-1"
+          />
           <input
             type="text"
             placeholder="Search movie"
@@ -74,10 +109,25 @@ function Dashboard() {
           />
         </form>
         <div className="flex gap-4">
-          <img src="icons/notification_icon.svg" alt="" width="30px" className="hidden lg:block invert" />
-          <img src="icons/profile_icon.svg" alt="" width="40px" className="hidden lg:block invert" />
+          <img
+            src="icons/notification_icon.svg"
+            alt=""
+            width="30px"
+            className="hidden lg:block invert"
+          />
+          <img
+            src="icons/profile_icon.svg"
+            alt=""
+            width="40px"
+            className="hidden lg:block invert"
+          />
         </div>
-        <img src="icons/hamburger_menu_icon.svg" alt="" width="40px" className="invert lg:hidden" />
+        <img
+          src="icons/hamburger_menu_icon.svg"
+          alt=""
+          width="40px"
+          className="invert lg:hidden"
+        />
       </div>
       {/* Navbar End */}
 
@@ -87,9 +137,14 @@ function Dashboard() {
         style={posterStyle}
       >
         <div className="absolute flex flex-col top-[65%] lg:top-[40%] lg:left-10 lg:w-[550px] gap-2 mx-4">
-          <h1 className="font-['montserrat'] text-[5vw] font-semibold text-white leading-tight">Avengers: Endgame</h1>
+          <h1 className="font-['montserrat'] text-[5vw] font-semibold text-white leading-tight">
+            Avengers: Endgame
+          </h1>
           <p className="hidden lg:block text-white text-justify">
-            After the devastating events of Avengers: Infinity War (2018), the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to reverse Thanos' actions and restore balance to the universe.
+            After the devastating events of Avengers: Infinity War (2018), the
+            universe is in ruins. With the help of remaining allies, the
+            Avengers assemble once more in order to reverse Thanos' actions and
+            restore balance to the universe.
           </p>
           <a
             href="https://youtu.be/TcMBFSGVi1c"
@@ -105,7 +160,9 @@ function Dashboard() {
 
       {/* Popular Movie */}
       <div className="mx-4 lg:mx-12 mt-8 font-['montserrat']">
-        <h1 className="relative text-white text-3xl font-medium mb-8">Popular Movie</h1>
+        <h1 className="relative text-white text-3xl font-medium mb-8">
+          Popular Movie
+        </h1>
         <div className="flex flex-wrap justify-between gap-2 lg:gap-10">
           {/* {film.map((item) => {
             return <p className="w-[110px] lg:w-[300px] rounded-lg border mb-2 text-white ">{item}</p>;
