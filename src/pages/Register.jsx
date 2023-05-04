@@ -1,7 +1,51 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
+import GoogleLogin from "../components/GoogleLogin";
 
 function Register() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      let data = JSON.stringify({
+        name,
+        email,
+        password,
+      });
+
+      let config = {
+        method: "post",
+        url: `${process.env.REACT_APP_API}/v1/auth/register`,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: data,
+      };
+
+      const response = await axios.request(config);
+      const { token } = response.data.data;
+
+      localStorage.setItem("token", token);
+
+      // navigate("/");
+
+      // Temporary solution
+      window.location.href = "/";
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response.data.message);
+        return;
+      }
+      toast.error(error.message);
+    }
+  };
+
   return (
     <div>
       {/* Container */}
@@ -78,8 +122,12 @@ function Register() {
             </button>
             {/* Submit Button End */}
           </form>
+
+          <p className="text-center my-3 text-sm font-semibold">Or</p>
+
+          <GoogleLogin></GoogleLogin>
           {/* Form  End*/}
-          <div className="flex gap-2 mt-4">
+          <div className="flex justify-center gap-2 mt-4">
             <p>Already have an account?</p>
             <Link to="/login" className="text-blue-600 font-semibold underline">
               Sign In

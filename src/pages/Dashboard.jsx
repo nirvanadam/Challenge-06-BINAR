@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getMovieList, searchMovie } from "../api";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Dashboard() {
   const [popularMovies, setPopularMovies] = useState([]);
@@ -57,6 +57,18 @@ function Dashboard() {
     // filter: "brightness(50%)",
   };
 
+  const navigate = useNavigate();
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
   return (
     <>
       {/* Navbar */}
@@ -67,7 +79,26 @@ function Dashboard() {
             HOME
           </Link>
 
-          <a href="#" className="relative before:content-[''] before:absolute before:bg-white before:w-0 before:h-[1px] before:transition-all before:bottom-0 before:left-0 before:duration-200 hover:before:w-full">
+          {isLoggedIn ? (
+            <>
+              <button
+                onClick={() => {
+                  localStorage.removeItem("token");
+                  setIsLoggedIn(false);
+                  return navigate("/");
+                }}
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <Link to={"/login"}>Login</Link>
+              <Link to={"/register"}>Register</Link>
+            </>
+          )}
+
+          {/* <a href="#" className="relative before:content-[''] before:absolute before:bg-white before:w-0 before:h-[1px] before:transition-all before:bottom-0 before:left-0 before:duration-200 hover:before:w-full">
             MOVIES
           </a>
           <a href="#" className="relative before:content-[''] before:absolute before:bg-white before:w-0 before:h-[1px] before:transition-all before:bottom-0 before:left-0 before:duration-200 hover:before:w-full">
@@ -75,7 +106,7 @@ function Dashboard() {
           </a>
           <a href="#" className="relative before:content-[''] before:absolute before:bg-white before:w-0 before:h-[1px] before:transition-all before:bottom-0 before:left-0 before:duration-200 hover:before:w-full">
             CONTACT
-          </a>
+          </a> */}
         </div>
         {/* Search Bar */}
         <form action="" onSubmit={handleSubmit} className="flex lg:w-[380px] rounded-full border-2 border-slate-600 px-1">

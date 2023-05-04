@@ -1,11 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useGoogleLogin } from "@react-oauth/google";
+import axios from "axios";
+import { toast } from "react-toastify";
+// import { useGoogleLogin } from "@react-oauth/google";
+import GoogleLogin from "../components/GoogleLogin";
 
 function Login() {
-  const loginWithGoogle = useGoogleLogin({
-    onSuccess: (tokenResponse) => console.log(tokenResponse),
-  });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      let data = JSON.stringify({
+        email,
+        password,
+      });
+
+      let config = {
+        method: "post",
+        url: `${process.env.REACT_APP_API}/v1/auth/login`,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: data,
+      };
+
+      const response = await axios.request(config);
+      const { token } = response.data.data;
+
+      localStorage.setItem("token", token);
+
+      // navigate("/");
+
+      // Temporary solution
+      window.location.href = "/";
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response.data.message);
+        return;
+      }
+      toast.error(error.message);
+    }
+  };
 
   return (
     <div>
@@ -48,9 +86,9 @@ function Login() {
 
           <p className="text-center my-3 text-sm font-semibold">Or</p>
 
-          <button onClick={() => loginWithGoogle()}>Sign in with Google 🚀 </button>
+          <GoogleLogin></GoogleLogin>
           {/* Form  End*/}
-          <div className="flex gap-2 mt-4">
+          <div className="flex justify-center gap-2 mt-4">
             <p>Don't have an account yet?</p>
             <Link to="/register" className="text-blue-600 font-semibold underline">
               Sign Up
