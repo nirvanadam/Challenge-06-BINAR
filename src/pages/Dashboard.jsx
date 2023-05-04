@@ -85,7 +85,7 @@ function Dashboard() {
                 onClick={() => {
                   localStorage.removeItem("token");
                   setIsLoggedIn(false);
-                  return navigate("/");
+                  return navigate("/login");
                 }}
               >
                 Logout
