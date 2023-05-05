@@ -116,7 +116,7 @@ export default function Detail() {
           <div className="h-[100vh] bg-white flex flex-col gap-4 justify-center items-center text-black font-quicksand ">
             <img src="/images/access-illustration.svg" alt="" width="35%" className="" />
             <p className="text-xl text-center w-[30%]">To access the following content, please login or sign up first by clicking the button below.</p>
-            <Link to={"/login"} className="w-[30%] text-center bg-[#121a1f] py-3 rounded-[5px] text-white hover:bg-[#1f2c35] active:scale-95 transition">
+            <Link to={"/login"} className="w-[30%] text-center font-medium bg-[#121a1f] py-3 rounded-[5px] text-white hover:bg-[#1f2c35] active:scale-95 transition">
               Login
             </Link>
             <div className="flex justify-center gap-2">
