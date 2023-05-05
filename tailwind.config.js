@@ -8,6 +8,9 @@ module.exports = {
         quicksand: ["Quicksand"],
         montserrat: ["Montserrat"],
       },
+      backgroundImage: {
+        "header-poster": "url('/public/images/endgame_poster.jpg')",
+      },
     },
   },
   plugins: [],

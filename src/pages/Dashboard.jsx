@@ -17,7 +17,9 @@ function Dashboard() {
     return popularMovies.map((movie, i) => {
       return (
         <div key={i} className="flex flex-col gap-2 lg:gap-4 w-[30%] lg:w-[22%] h-fit font-['montserrat'] text-center text-white group text-[8px] lg:text-base">
-          <img src={`${process.env.REACT_APP_BASEIMGURL}/${movie.poster_path}`} alt="poster" className="group-hover:scale-105 transition-all duration-150" />
+          <Link to={`/movie/${movie.id}`}>
+            <img src={`${process.env.REACT_APP_BASEIMGURL}/${movie.poster_path}`} alt="poster" className="group-hover:scale-105 transition-all duration-150" />
+          </Link>
           <h1 className="font-semibold tracking-widest uppercase">{movie.title}</h1>
           <div className="flex flex-col lg:flex-row justify-center items-center gap-2 lg:gap-4">
             <h2 className="tracking-widest">{movie.release_date}</h2>
@@ -27,7 +29,6 @@ function Dashboard() {
               <h2 className="text-yellow-300">{movie.vote_average}</h2>
             </div>
           </div>
-          <Link to={`/movie/${movie.id}`}>Detail</Link>
         </div>
       );
     });
@@ -72,13 +73,37 @@ function Dashboard() {
   return (
     <>
       {/* Navbar */}
-      <div className="flex justify-between lg:gap-9 mx-4 lg:mx-10 my-6 fonts-['montserrat']">
-        <img src="icons/binar_icon.png" alt="" width="50px" />
+      <div className="flex justify-between lg:gap-9 mx-4 lg:mx-10 my-4 font-quicksand ">
+        <Link to={"/"}>
+          <img src="icons/binar_icon.png" alt="" width="50px" />
+        </Link>
         <div className="hidden lg:flex justify-center items-center gap-16 font-['montserrat'] text-white">
-          <Link to={`/`} className="relative before:content-[''] before:absolute before:bg-white before:w-0 before:h-[1px] before:transition-all before:bottom-0 before:left-0 before:duration-200 hover:before:w-full">
+          <Link to={`/`} className="relative font-medium text-sm before:content-[''] before:absolute before:bg-white before:w-0 before:h-[1px] before:transition-all before:bottom-0 before:left-0 before:duration-200 hover:before:w-full">
             HOME
           </Link>
+          <Link to={`/`} className="relative font-medium text-sm before:content-[''] before:absolute before:bg-white before:w-0 before:h-[1px] before:transition-all before:bottom-0 before:left-0 before:duration-200 hover:before:w-full">
+            MOVIES
+          </Link>
+          <Link to={`/`} className="relative font-medium text-sm before:content-[''] before:absolute before:bg-white before:w-0 before:h-[1px] before:transition-all before:bottom-0 before:left-0 before:duration-200 hover:before:w-full">
+            TV SHOWS
+          </Link>
+          <Link to={`#`} className="relative font-medium text-sm before:content-[''] before:absolute before:bg-white before:w-0 before:h-[1px] before:transition-all before:bottom-0 before:left-0 before:duration-200 hover:before:w-full">
+            ABOUT
+          </Link>
+        </div>
+        {/* Search Bar */}
+        <form action="" onSubmit={handleSubmit} className="flex h-fit lg:w-[380px] rounded-full border-2 border-slate-600 px-1">
+          <img src="icons/search_icon.svg" alt="" width="30px" className="invert px-1" />
+          <input
+            type="text"
+            placeholder="Search movie"
+            onChange={handleChange}
+            className="group bg-transparent w-full outline-none text-white pr-3 py-2 placeholder:font-[montserrat] placeholder:text-sm placeholder:font-medium placeholder:transition placeholder:duration-500 focus:placeholder:-translate-x-48"
+          />
+        </form>
+        {/* Search Bar End */}
 
+        <div className="flex gap-8 text-white items-center font-quicksand">
           {isLoggedIn ? (
             <>
               <button
@@ -87,51 +112,30 @@ function Dashboard() {
                   setIsLoggedIn(false);
                   return navigate("/login");
                 }}
+                className="text-white font-medium"
               >
                 Logout
               </button>
             </>
           ) : (
             <>
-              <Link to={"/login"}>Login</Link>
-              <Link to={"/register"}>Register</Link>
+              <Link to={"/register"} className="text-white font-medium">
+                Register
+              </Link>
+              <Link to={"/login"} className="text-white bg-[#7A187D] px-6 py-2 rounded-md font-medium">
+                Login
+              </Link>
             </>
           )}
+        </div>
 
-          {/* <a href="#" className="relative before:content-[''] before:absolute before:bg-white before:w-0 before:h-[1px] before:transition-all before:bottom-0 before:left-0 before:duration-200 hover:before:w-full">
-            MOVIES
-          </a>
-          <a href="#" className="relative before:content-[''] before:absolute before:bg-white before:w-0 before:h-[1px] before:transition-all before:bottom-0 before:left-0 before:duration-200 hover:before:w-full">
-            TV SHOWS
-          </a>
-          <a href="#" className="relative before:content-[''] before:absolute before:bg-white before:w-0 before:h-[1px] before:transition-all before:bottom-0 before:left-0 before:duration-200 hover:before:w-full">
-            CONTACT
-          </a> */}
-        </div>
-        {/* Search Bar */}
-        <form action="" onSubmit={handleSubmit} className="flex lg:w-[380px] rounded-full border-2 border-slate-600 px-1">
-          <img src="icons/search_icon.svg" alt="" width="35px" className="invert px-1" />
-          <input
-            type="text"
-            placeholder="Search movie"
-            onChange={handleChange}
-            className="group bg-transparent w-full outline-none text-white pr-3 py-2 placeholder:font-[montserrat] placeholder:font-medium placeholder:transition placeholder:duration-500 focus:placeholder:-translate-x-48"
-          />
-        </form>
-        {/* Search Bar End */}
-        <div className="flex gap-4">
-          <img src="icons/notification_icon.svg" alt="" width="30px" className="hidden lg:block invert" />
-          <img src="icons/profile_icon.svg" alt="" width="40px" className="hidden lg:block invert" />
-        </div>
         <img src="icons/hamburger_menu_icon.svg" alt="" width="40px" className="invert lg:hidden" />
       </div>
       {/* Navbar End */}
 
       {/* Header */}
-      <div
-        className="relative rounded-lg lg:rounded-none mx-4 lg:mx-0 h-[50vw] lg:h-[40vw] before:content-[''] before:absolute before:bg-gradient-to-r from-black from-10% to-transparent before:top-0 before:bottom-0 before:right-0 before:left-0 before:rounded-lg lg:before:rounded-none"
-        style={posterStyle}
-      >
+      <div className="relative overflow-hidden  rounded-lg lg:rounded-2xl mx-4 lg:mx-6 h-[100vh] lg:h-[90vh] group">
+        <div className="absolute rounded-2xl top-0 bottom-0 left-0 right-0 bg-header-poster bg-cover bg-[top_left_200px] before:content-[''] before:absolute before:bg-gradient-to-r from-black from-10% to-transparent before:top-0 before:bottom-0 before:right-0 before:left-0 before:rounded-lg lg:before:rounded-2xl transition duration-500 group-hover:scale-125"></div>
         <div className="absolute flex flex-col top-[65%] lg:top-[40%] lg:left-10 lg:w-[550px] gap-2 mx-4">
           <h1 className="font-['montserrat'] text-[5vw] font-semibold text-white leading-tight">Avengers: Endgame</h1>
           <p className="hidden lg:block text-white text-justify">
@@ -140,7 +144,7 @@ function Dashboard() {
           <a
             href="https://youtu.be/TcMBFSGVi1c"
             target="_blank"
-            className="flex items-center gap-2 bg-cyan-500 w-fit lg:mt-2 rounded-sm text-[8px] md:text-[12px] lg:text-[1vw] pl-2 pr-3 py-1 lg:py-2 text-white hover:bg-cyan-600 transition active:scale-90"
+            className="flex items-center gap-2 bg-[#7A187D] w-fit lg:mt-2 rounded-sm text-[8px] md:text-[12px] lg:text-[1vw] pl-2 pr-3 py-1 lg:py-2 text-white hover:bg-purple-600 transition active:scale-90"
           >
             <img src="icons/play_icon.svg" alt="" className="invert w-[15px]" />
             <h1 className="">TRAILER</h1>
