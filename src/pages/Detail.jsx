@@ -8,12 +8,12 @@ export default function Detail() {
   const [user, setUser] = useState("");
 
   useEffect(() => {
-    const getMe = async () => {
+    const getMe = async (id) => {
       try {
         const token = localStorage.getItem("token");
 
         const response = await axios.get(
-          `https://km4-challenge-5-api.up.railway.app/api/v1/movie/{MOVIE_ID}`,
+          `https://km4-challenge-5-api.up.railway.app/api/v1/movie/${id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -40,7 +40,7 @@ export default function Detail() {
       }
     };
 
-    getMe();
+    getMe(params.id);
   }, []);
 
   const [detail, setDetail] = useState({});
