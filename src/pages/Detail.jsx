@@ -34,25 +34,6 @@ export default function Detail() {
               <Link to={`/`} className="relative before:content-[''] before:absolute before:bg-white before:w-0 before:h-[1px] before:transition-all before:bottom-0 before:left-0 before:duration-200 hover:before:w-full">
                 HOME
               </Link>
-
-              {/* <a
-            href="#"
-            className="relative before:content-[''] before:absolute before:bg-white before:w-0 before:h-[1px] before:transition-all before:bottom-0 before:left-0 before:duration-200 hover:before:w-full"
-          >
-            MOVIES
-          </a>
-          <a
-            href="#"
-            className="relative before:content-[''] before:absolute before:bg-white before:w-0 before:h-[1px] before:transition-all before:bottom-0 before:left-0 before:duration-200 hover:before:w-full"
-          >
-            TV SHOWS
-          </a>
-          <a
-            href="#"
-            className="relative before:content-[''] before:absolute before:bg-white before:w-0 before:h-[1px] before:transition-all before:bottom-0 before:left-0 before:duration-200 hover:before:w-full"
-          >
-            CONTACT
-          </a> */}
             </div>
 
             <div className="flex gap-4">
