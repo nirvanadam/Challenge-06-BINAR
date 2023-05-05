@@ -25,6 +25,8 @@ export default function Detail() {
 
   return (
     <div>
+      <p>Hai</p>
+
       {isLoggedIn ? (
         <>
           {/* Navbar */}

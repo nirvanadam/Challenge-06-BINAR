@@ -72,6 +72,7 @@ function Dashboard() {
 
   return (
     <>
+      <p>Hai</p>
       {/* Navbar */}
       <div className="flex justify-between lg:gap-9 mx-4 lg:mx-10 my-4 font-quicksand ">
         <Link to={"/"}>
