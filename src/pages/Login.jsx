@@ -9,7 +9,7 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const onSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
@@ -20,7 +20,7 @@ function Login() {
 
       let config = {
         method: "post",
-        url: `${process.env.REACT_APP_API}/v1/auth/login`,
+        url: `https://km4-challenge-5-api.up.railway.app/api/v1/auth/login`,
         headers: {
           "Content-Type": "application/json",
         },
@@ -30,18 +30,13 @@ function Login() {
       const response = await axios.request(config);
       const { token } = response.data.data;
 
+      console.log(token);
+
       localStorage.setItem("token", token);
 
-      // navigate("/");
-
-      // Temporary solution
-      window.location.href = "/";
+      window.location.href = "/dashboard";
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        toast.error(error.response.data.message);
-        return;
-      }
-      toast.error(error.message);
+      toast.error(error.response.data.message);
     }
   };
 
@@ -60,8 +55,9 @@ function Login() {
             {/* Email Input */}
             <input
               type="email"
-              name=""
-              id=""
+              name="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="Email"
               className="w-full border border-slate-300 py-[10px] px-[15px] rounded-[5px] outline-none transition duration-200 placeholder:text-[#263238] placeholder:text-base placeholder:font-medium placeholder:transition placeholder:duration-500 focus:placeholder:-translate-x-48 focus:border-[#263238] invalid:focus:border-red-600"
             />
@@ -70,27 +66,33 @@ function Login() {
             {/* Password Input */}
             <input
               type="password"
-              name=""
-              id=""
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="Password"
               className="w-full border border-slate-300 py-[10px] px-[15px] rounded-[5px] outline-none transition duration-200 placeholder:text-[#263238] placeholder:text-base placeholder:font-medium placeholder:transition placeholder:duration-500 focus:placeholder:-translate-x-48 focus:border-[#263238] invalid:focus:border-red-600"
             />
             {/* Password Input End */}
-
             {/* Submit Button */}
-            <button type="submit" className="w-full bg-[#121a1f] py-3 rounded-[5px] text-white">
+            <button
+              type="submit"
+              onClick={handleSubmit}
+              className="w-full bg-[#121a1f] py-3 rounded-[5px] text-white"
+            >
               Login
             </button>
             {/* Submit Button End */}
           </form>
-
           <p className="text-center my-3 text-sm font-semibold">Or</p>
 
           <GoogleLogin></GoogleLogin>
           {/* Form  End*/}
           <div className="flex justify-center gap-2 mt-4">
             <p>Don't have an account yet?</p>
-            <Link to="/register" className="text-blue-600 font-semibold underline">
+            <Link
+              to="/register"
+              className="text-blue-600 font-semibold underline"
+            >
               Sign Up
             </Link>
           </div>

@@ -5,44 +5,45 @@ import { toast } from "react-toastify";
 import GoogleLogin from "../components/GoogleLogin";
 
 function Register() {
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
-  const onSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      let data = JSON.stringify({
-        name,
-        email,
-        password,
-      });
+    if (confirmPassword !== password) {
+      alert("password tidak sama");
+    } else {
+      try {
+        let data = JSON.stringify({
+          email,
+          password,
+          name: `${firstName} ${lastName}`,
+        });
 
-      let config = {
-        method: "post",
-        url: `${process.env.REACT_APP_API}/v1/auth/register`,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        data: data,
-      };
+        let config = {
+          method: "post",
+          url: `https://km4-challenge-5-api.up.railway.app/api/v1/auth/register`,
+          headers: {
+            "Content-Type": "application/json",
+          },
+          data: data,
+        };
 
-      const response = await axios.request(config);
-      const { token } = response.data.data;
+        const response = await axios.request(config);
+        const { token } = response.data.data;
 
-      localStorage.setItem("token", token);
+        console.log(token);
 
-      // navigate("/");
+        localStorage.setItem("token", token);
 
-      // Temporary solution
-      window.location.href = "/";
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
+        window.location.href = "/dashboard";
+      } catch (error) {
         toast.error(error.response.data.message);
-        return;
       }
-      toast.error(error.message);
     }
   };
 
@@ -52,7 +53,11 @@ function Register() {
       <div className="grid grid-cols-2 h-[100vh] font-quicksand">
         {/* Left */}
         <div className="w-full flex justify-center">
-          <img src="images/register-illustration.svg" alt="" className="w-3/4" />
+          <img
+            src="images/register-illustration.svg"
+            alt=""
+            className="w-3/4"
+          />
         </div>
         {/* Left End */}
 
@@ -68,8 +73,9 @@ function Register() {
               {/* First Name Input */}
               <input
                 type="text"
-                name=""
-                id=""
+                name="firstName"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
                 placeholder="First Name"
                 className="w-full border border-slate-300 py-[10px] px-[15px] rounded-[5px] outline-none transition duration-200 placeholder:text-[#263238] placeholder:text-base placeholder:font-medium placeholder:transition placeholder:duration-500 focus:placeholder:-translate-x-48 focus:border-[#263238] invalid:focus:border-red-600"
               />
@@ -78,8 +84,9 @@ function Register() {
               {/* Last Name Input */}
               <input
                 type="text"
-                name=""
-                id=""
+                name="LastName"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
                 placeholder="Last Name"
                 className="w-full border border-slate-300 py-[10px] px-[15px] rounded-[5px] outline-none transition duration-200 placeholder:text-[#263238] placeholder:text-base placeholder:font-medium placeholder:transition placeholder:duration-500 focus:placeholder:-translate-x-48 focus:border-[#263238] invalid:focus:border-red-600"
               />
@@ -89,8 +96,9 @@ function Register() {
             {/* Email Input */}
             <input
               type="email"
-              name=""
-              id=""
+              name="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="Email"
               className="w-full border border-slate-300 py-[10px] px-[15px] rounded-[5px] outline-none transition duration-200 placeholder:text-[#263238] placeholder:text-base placeholder:font-medium placeholder:transition placeholder:duration-500 focus:placeholder:-translate-x-48 focus:border-[#263238] invalid:focus:border-red-600"
             />
@@ -99,8 +107,9 @@ function Register() {
             {/* Password Input */}
             <input
               type="password"
-              name=""
-              id=""
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="Password"
               className="w-full border border-slate-300 py-[10px] px-[15px] rounded-[5px] outline-none transition duration-200 placeholder:text-[#263238] placeholder:text-base placeholder:font-medium placeholder:transition placeholder:duration-500 focus:placeholder:-translate-x-48 focus:border-[#263238] invalid:focus:border-red-600"
             />
@@ -109,15 +118,20 @@ function Register() {
             {/* Password Confirm Input */}
             <input
               type="password"
-              name=""
-              id=""
+              name="confirmPassword"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
               placeholder="Password Confirmation"
               className="w-full border bg-gray-100 border-slate-300 py-[10px] px-[15px] rounded-[5px] outline-none transition duration-200 placeholder:text-[#263238] placeholder:text-base placeholder:font-medium placeholder:transition placeholder:duration-500 focus:placeholder:-translate-x-48 focus:border-[#263238] invalid:focus:border-red-600"
             />
             {/* Password Confirm Input End */}
 
             {/* Submit Button */}
-            <button type="submit" className="w-full bg-[#121a1f] py-3 rounded-[5px] text-white">
+            <button
+              type="submit"
+              onClick={handleSubmit}
+              className="w-full bg-[#121a1f] py-3 rounded-[5px] text-white"
+            >
               Sign Up
             </button>
             {/* Submit Button End */}
