@@ -135,7 +135,7 @@ function Dashboard() {
 
       {/* Header */}
       <div className="relative overflow-hidden rounded-lg lg:rounded-2xl mx-4 lg:mx-6 h-[100vh] lg:h-[90vh] group">
-        <div className="absolute rounded-2xl w-full h-full bg-header-poster bg-cover transition-all duration-500 bg-[top_left_200px] before:content-[''] before:absolute before:bg-gradient-to-r from-black from-10% to-transparent before:top-0 before:bottom-0 before:right-0 before:left-0 before:rounded-lg lg:before:rounded-2xl group-hover:scale-125"></div>
+        <div className="absolute rounded-2xl w-full h-full bg-header-poster bg-cover transition-all duration-500 bg-[top_left_200px] before:content-[''] before:absolute before:bg-gradient-to-r from-black from-10% to-transparent before:top-0 before:bottom-0 before:right-0 before:left-0 before:rounded-lg lg:before:rounded-2xl"></div>
         <div className="absolute flex flex-col top-[65%] lg:top-[40%] lg:left-10 lg:w-[550px] gap-2 mx-4">
           <h1 className="font-['montserrat'] text-[5vw] font-semibold text-white leading-tight">Avengers: Endgame</h1>
           <p className="hidden lg:block text-white text-justify">
