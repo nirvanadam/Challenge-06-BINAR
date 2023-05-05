@@ -2,8 +2,47 @@ import React, { useEffect, useState } from "react";
 import { detailMovie } from "../api";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-
+import axios from "axios";
+import { toast } from "react-toastify";
 export default function Detail() {
+  const [user, setUser] = useState("");
+
+  useEffect(() => {
+    const getMe = async () => {
+      try {
+        const token = localStorage.getItem("token");
+
+        const response = await axios.get(
+          `https://km4-challenge-5-api.up.railway.app/api/v1/movie/{MOVIE_ID}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        const data = response.data.data;
+
+        setUser(data);
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          // If not valid token
+          if (error.response.status === 401) {
+            localStorage.removeItem("token");
+            // Temporary solution
+            return (window.location.href = "/login");
+          }
+
+          toast.error(error.response.data.message);
+          return;
+        }
+        toast.error(error.message);
+      }
+    };
+
+    getMe();
+  }, []);
+
   const [detail, setDetail] = useState({});
   const params = useParams();
 
