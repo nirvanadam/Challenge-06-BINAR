@@ -2,15 +2,19 @@ import React, { useEffect, useState } from "react";
 import { detailMovie } from "../api";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getDetailMovie } from "../store/features/movieSlice";
 
 export default function Detail() {
-  const [detail, setDetail] = useState({});
+  // const [detail, setDetail] = useState({});
   const params = useParams();
+  const dispatch = useDispatch();
+  const detail = useSelector((state) => state.movies.detail);
+
+  console.log(detail);
 
   useEffect(() => {
-    detailMovie(params.id).then((result) => {
-      setDetail(result);
-    });
+    dispatch(getDetailMovie(params.id));
   }, [params]);
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -48,7 +52,7 @@ export default function Detail() {
           <div
             className="relative bg-cover h-[100vh] rounded-lg lg:rounded-none mx-4 lg:mx-0 before:content-[''] before:absolute before:bg-gradient-to-r from-black from-10% to-transparent before:top-0 before:bottom-0 before:right-0 before:left-0 font-[montserrat] text-white"
             style={{
-              backgroundImage: `url('${process.env.REACT_APP_BASEIMGURL}/${detail.backdrop_path}`,
+              backgroundImage: `url('${process.env.REACT_APP_BASEIMGURL}${detail.backdrop_path}`,
             }}
           >
             {/* <img src={`${process.env.REACT_APP_BASEIMGURL}/${detail.backdrop_path}`} alt="Backdrop" className="absolute" /> */}

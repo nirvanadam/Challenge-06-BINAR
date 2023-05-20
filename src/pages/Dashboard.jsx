@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { getMovieList, searchMovie } from "../api";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchMovie, getSearchMovie } from "../store/features/movieSlice";
 
 function Dashboard() {
-  const [popularMovies, setPopularMovies] = useState([]);
+  const data = useSelector((state) => state.movies.data);
+  const dispatch = useDispatch();
   const [querySearch, setQuerySearch] = useState("");
 
   // Mendapatkan data ketika website dibuka
   useEffect(() => {
-    getMovieList().then((result) => {
-      setPopularMovies(result);
-    });
-  }, []);
+    dispatch(fetchMovie());
+  }, [dispatch]);
 
   const PopularMovieList = () => {
-    return popularMovies.map((movie, i) => {
+    return data.map((movie, i) => {
       return (
         <div key={i} className="flex flex-col gap-2 lg:gap-4 w-[30%] lg:w-[22%] h-fit font-['montserrat'] text-center text-white group text-[8px] lg:text-base">
           <Link to={`/movie/${movie.id}`}>
@@ -34,20 +35,13 @@ function Dashboard() {
     });
   };
 
-  const search = async (q) => {
-    if (q.length > 3) {
-      const query = await searchMovie(q);
-      setPopularMovies(query.results);
-    }
-  };
-
   const handleChange = (e) => {
     setQuerySearch(e.target.value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    search(querySearch);
+    dispatch(getSearchMovie(querySearch));
   };
 
   // Style header poster

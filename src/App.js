@@ -10,9 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
-    <GoogleOAuthProvider
-      clientId={process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID}
-    >
+    <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Dashboard />} />
